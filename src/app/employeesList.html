@@ -1,0 +1,168 @@
+<div class="container-xl">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Controle de <b>Empregados</b> - Unidade <b>9999</b></h2>
+          </div>
+          <div class="col-sm-6">
+            <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Incluir Novo Empregado</span></a>
+          </div>
+        </div>
+      </div>
+      <table *ngIf="employees" class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Matrícula</th>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>Função Gratificada</th>
+            <th>Escolaridade</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees">
+            <td>{{ employee.enrollment }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.birthDate }}</td>
+            <td>{{ employee.role }}</td>
+            <td>{{ employee.scholarship }}</td>
+            <td>
+              <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" (click)="prepareToUpdate(employee)">&#xE254;</i></a>
+              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Remover" (click)="prepareToUpdate(employee)">&#xE872;</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Edit Modal HTML -->
+<div id="addEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form (ngSubmit)="onCreateSubmit()" [formGroup]="employeeFormGroup">
+        <div class="modal-header">
+          <h4 class="modal-title">Incluir Empregado</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Matrícula</label>
+            <input formControlName="enrollment" type="text" id="enrollment" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Nome</label>
+            <input formControlName="name" type="text" id="name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Data de Nascimento</label>
+            <input formControlName="birthDate" type="date" id="birthDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="role">Função Gratificada</label>
+            <select id="role" name="role" class="form-control" formControlName="role" required>
+              <option value="Técnico Bancário Novo">Técnico Bancário Novo</option>
+              <option value="Assistente Júnior">Assistente Júnior</option>
+              <option value="Assistente Pleno">Assistente Pleno</option>
+              <option value="Assistente Sênior">Assistente Sênior</option>
+              <option value="Supervisor de Centralizadora">Supervisor de Centralizadora</option>
+              <option value="Coordenador de Centralizadora">Coordenador de Centralizadora</option>
+              <option value="Gerente de Centralizadora">Gerente de Centralizadora</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="scholarship">Escolaridade</label>
+            <select id="scholarship" name="scholarship" class="form-control" formControlName="scholarship" required>
+              <option value="Ensino Médio">Ensino Médio</option>
+              <option value="Ensino Superior">Ensino Superior</option>
+              <option value="Pós Graduação/Especialização">Pós Graduação/Especialização</option>
+              <option value="Mestrado">Mestrado</option>
+              <option value="Doutorado">Doutorado</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+          <button type="submit">Incluir Empregado</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Edit Modal HTML -->
+<div id="editEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form (ngSubmit)="onUpdateSubmit()" [formGroup]="employeeFormGroup">
+        <div class="modal-header">
+          <h4 class="modal-title">Alterar Dados do Empregado</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Matrícula</label>
+            <input formControlName="enrollment" type="text" id="enrollment" class="form-control" [readonly]="true">
+          </div>
+          <div class="form-group">
+            <label>Nome</label>
+            <input formControlName="name" type="text" id="name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Data de Nascimento</label>
+            <input formControlName="birthDate" type="date" id="birthDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="role">Função Gratificada</label>
+            <select id="role" name="role" class="form-control" formControlName="role" required>
+              <option value="Técnico Bancário Novo">Técnico Bancário Novo</option>
+              <option value="Assistente Júnior">Assistente Júnior</option>
+              <option value="Assistente Pleno">Assistente Pleno</option>
+              <option value="Assistente Sênior">Assistente Sênior</option>
+              <option value="Supervisor de Centralizadora">Supervisor de Centralizadora</option>
+              <option value="Coordenador de Centralizadora">Coordenador de Centralizadora</option>
+              <option value="Gerente de Centralizadora">Gerente de Centralizadora</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="scholarship">Escolaridade</label>
+            <select id="scholarship" name="scholarship" class="form-control" formControlName="scholarship" required>
+              <option value="Ensino Médio">Ensino Médio</option>
+              <option value="Ensino Superior">Ensino Superior</option>
+              <option value="Pós Graduação/Especialização">Pós Graduação/Especialização</option>
+              <option value="Mestrado">Mestrado</option>
+              <option value="Doutorado">Doutorado</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+          <button type="submit">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal HTML -->
+<div id="deleteEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="employeeFormGroup">
+        <div class="modal-header">
+          <h4 class="modal-title">Excluir Empregado</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Você quer realmente excluir os dados desse empregado?</p>
+          <p class="text-warning"><small>Esta ação não pode ser desfeita.</small></p>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+          <button type="button" (click)="deleteEmployee()" data-dismiss="modal">Excluir</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
